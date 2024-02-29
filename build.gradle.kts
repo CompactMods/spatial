@@ -1,4 +1,5 @@
 plugins {
+    id("idea")
     id("java")
     id("net.neoforged.gradle.userdev") version "7.0.96"
 }
@@ -17,10 +18,19 @@ repositories {
     mavenCentral()
 }
 
+idea {
+
+}
+
+minecraft.modIdentifier("spatial")
+
 runs.create("gameTestServer") {
     this.gameTest()
     systemProperty("forge.enabledGameTestNamespaces", "spatial")
+    environmentVariables("TEST_RESOURCES", project.file("src/test/resources").path)
+
     modSource(sourceSets.main.get())
+    modSource(sourceSets.test.get())
 }
 
 dependencies {
