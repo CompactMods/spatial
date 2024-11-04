@@ -40,8 +40,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-runs/
+spatial/runs/
 
 run/
 
 logs/
+
+spatial-neoforge/runs/

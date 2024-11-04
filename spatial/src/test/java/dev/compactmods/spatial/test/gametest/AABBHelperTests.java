@@ -1,7 +1,8 @@
-package dev.compactmods.spatial.tests;
+package dev.compactmods.spatial.test.gametest;
 
 import com.google.common.math.DoubleMath;
 import dev.compactmods.spatial.aabb.AABBHelper;
+import dev.compactmods.spatial.test.core.EmptyTestSizes;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestGenerator;
@@ -11,18 +12,19 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.testframework.annotation.ForEachTest;
+import net.neoforged.testframework.annotation.TestHolder;
+import net.neoforged.testframework.gametest.EmptyTemplate;
 
 import java.util.Collection;
 import java.util.stream.Stream;
 
-@GameTestHolder("spatial")
-@PrefixGameTestTemplate(false)
+@ForEachTest(groups = AABBHelperTests.BATCH)
 public class AABBHelperTests {
-    private static final String BATCH = "aabb-helper";
+    static final String BATCH = "aabb-helper";
 
-    @GameTest(template = "empty_1x1", batch = BATCH)
+    @TestHolder @GameTest
+    @EmptyTemplate(EmptyTestSizes.ONE_CUBED)
     public static void canFloorToY0(final GameTestHelper test) {
         // Source minY = 5
         AABB before = AABB.ofSize(new Vec3(0, 7.5, 0), 5, 5, 5);
@@ -36,7 +38,8 @@ public class AABBHelperTests {
         test.succeed();
     }
 
-    @GameTest(template = "empty_1x1", batch = BATCH)
+    @TestHolder @GameTest
+    @EmptyTemplate(EmptyTestSizes.ONE_CUBED)
     public static void canFloorToAnotherAABB(final GameTestHelper test) {
         // Source minY = 5
         AABB before = AABB.ofSize(Vec3.ZERO.relative(Direction.UP, 7.5), 5, 5, 5);
@@ -54,7 +57,8 @@ public class AABBHelperTests {
         test.succeed();
     }
 
-    @GameTest(template = "empty_1x1", batch = BATCH)
+    @TestHolder @GameTest
+    @EmptyTemplate(EmptyTestSizes.ONE_CUBED)
     public static void normalizeToZero(final GameTestHelper test) {
         AABB before = AABB.ofSize(Vec3.ZERO.relative(Direction.UP, 7.5), 5, 5, 5);
 
@@ -71,6 +75,7 @@ public class AABBHelperTests {
         test.succeed();
     }
 
+    @TestHolder
     @GameTestGenerator
     public static Collection<TestFunction> normalizeBoundaryTests() {
         final var random = RandomSource.create();
