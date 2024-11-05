@@ -25,10 +25,6 @@ neoForge {
         create("spatial") {
             modSourceSets.add(spatialLib.sourceSets.main)
         }
-
-        create("spatialtest") {
-            modSourceSets.add(sourceSets.test)
-        }
     }
 
     unitTest {
@@ -41,7 +37,7 @@ neoForge {
             this.type = "gameTestServer"
             gameDirectory.set(file("runs/gametest"))
 
-            systemProperty("neoforge.enabledGameTestNamespaces", "spatialtest")
+            systemProperty("neoforge.enabledGameTestNamespaces", "spatial")
 
             this.sourceSet = sourceSets.test
         }
@@ -49,10 +45,12 @@ neoForge {
 }
 
 dependencies {
-    testImplementation(spatialLib)
+    testCompileOnly(spatialLib)
+    additionalRuntimeClasspath(spatialLib)
+
     testImplementation(neoforged.testframework)
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

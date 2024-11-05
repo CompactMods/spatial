@@ -3,7 +3,7 @@ loaderVersion = "${loader_version_range}"
 license = "MIT"
 
 [[mods]] #mandatory
-modId = "spatialtest"
+modId = "spatial"
 version = "0.0.1"
 displayName = "Spatial Test Mod"
 authors = "RobotGryphon" #optional
@@ -16,14 +16,14 @@ displayURL = "https://compactmods.dev"
 # logoFile="examplemod.png" #optional
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.spatialtest]] #optional
+[[dependencies.spatial]] #optional
 modId = "neoforge"
 type = "required"
 versionRange = "${neo_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.spatialtest]]
+[[dependencies.spatial]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraft_version_range}"
