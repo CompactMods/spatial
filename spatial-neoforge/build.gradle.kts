@@ -27,15 +27,13 @@ neoForge {
         }
 
         create("spatialtest") {
-            modSourceSets.add(spatialLib.sourceSets.main)
-            modSourceSets.add(sourceSets.main)
             modSourceSets.add(sourceSets.test)
         }
     }
 
     unitTest {
         enable()
-        testedMod = mods.named("spatialtest")
+        testedMod = mods.named("spatial")
     }
 
     runs {
@@ -53,6 +51,13 @@ neoForge {
 dependencies {
     testImplementation(spatialLib)
     testImplementation(neoforged.testframework)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 tasks.withType<ProcessResources>().configureEach {

@@ -57,4 +57,4 @@ plugins {
 }
 
 include("spatial")
-// include("spatial-neoforge")
+include("spatial-neoforge")

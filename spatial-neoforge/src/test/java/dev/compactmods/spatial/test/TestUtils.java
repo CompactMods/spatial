@@ -1,4 +1,4 @@
-package dev.compactmods.spatial.test.gametest;
+package dev.compactmods.spatial.test;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
