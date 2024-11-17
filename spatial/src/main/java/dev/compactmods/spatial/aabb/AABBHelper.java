@@ -1,12 +1,44 @@
 package dev.compactmods.spatial.aabb;
 
+import dev.compactmods.spatial.vector.VectorUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3d;
+import org.joml.Vector3dc;
 
 import java.util.stream.Stream;
 
 public abstract class AABBHelper {
+
+    public static Vector3d sizeOf(AABB aabb) {
+        return new Vector3d(aabb.getXsize(), aabb.getYsize(), aabb.getZsize());
+    }
+
+    public static AABB zeroOriginSized(double size) {
+        return AABB.ofSize(Vec3.ZERO, size, size, size);
+    }
+
+    public static AABB zeroOriginSized(Vector3dc size) {
+        return AABB.ofSize(Vec3.ZERO, size.x(), size.y(), size.z());
+    }
+
+    public static boolean fitsInside(AABB aabb, Vec3 dimensions) {
+        return fitsInside(aabb, VectorUtils.convert3d(dimensions));
+    }
+
+    public static boolean fitsInside(AABB aabb, Vector3dc dimensions) {
+        return dimensions.x() <= aabb.getXsize() &&
+                dimensions.y() <= aabb.getYsize() &&
+                dimensions.z() <= aabb.getZsize();
+    }
+
+    public static boolean fitsInside(AABB outer, AABB inner) {
+        if(!fitsInside(inner, sizeOf(outer))) return false;
+        return outer.contains(VectorUtils.convert3d(minCorner(inner))) &&
+            outer.contains(VectorUtils.convert3d(maxCorner(outer)));
+    }
 
     public static Stream<BlockPos> blocksInside(AABB bounds) {
         return BlockPos.betweenClosedStream(bounds.contract(1, 1, 1));
@@ -25,41 +57,41 @@ public abstract class AABBHelper {
         return stream.build();
     }
 
-    public static Vec3 minCorner(AABB aabb) {
-        return new Vec3(aabb.minX, aabb.minY, aabb.minZ);
+    public static Vector3dc minCorner(AABB aabb) {
+        return new Vector3d(aabb.minX, aabb.minY, aabb.minZ);
     }
 
-    public static Vec3 maxCorner(AABB aabb) {
-        return new Vec3(aabb.maxX, aabb.maxY, aabb.maxZ);
+    public static ChunkPos minCornerChunk(AABB aabb) {
+        var mn = BlockPos.containing(aabb.minX, aabb.minY, aabb.minZ);
+        return new ChunkPos(mn);
     }
 
-    /**
-     * Given an area, normalizes the bounds so that the minimum coordinates
-     * all equal zero. (i.e. 5,5,5 to 11,11,11 becomes 0,0,0 to 6,6,6)
-     * @param boundaries Original AABB instance.
-     * @return A new instance of AABB, normalized to zero coordinates.
-     */
-    public static AABB normalize(AABB boundaries) {
-        Vec3 offset = minCorner(boundaries).reverse();
-        return boundaries.move(offset);
+    public static Vector3dc maxCorner(AABB aabb) {
+        return new Vector3d(aabb.maxX, aabb.maxY, aabb.maxZ);
     }
 
-    public static AABB normalizeWithin(AABB source, AABB within) {
-        Vec3 offset = minCorner(source).subtract(minCorner(within)).reverse();
-        return source.move(offset);
+    public static ChunkPos maxCornerChunk(AABB aabb) {
+        var mx = BlockPos.containing(aabb.maxX, aabb.maxY, aabb.maxZ);
+        return new ChunkPos(mx);
     }
 
-    public static AABB alignFloor(AABB source, AABB within) {
-        double targetY = within.minY;
-        return alignFloor(source, targetY);
-    }
-
-    public static AABB alignFloor(AABB source, double targetY) {
-        double offset = source.minY - targetY;
-        return source.move(0, offset * -1, 0);
+    public static Stream<ChunkPos> chunkPositions(AABB aabb) {
+        return ChunkPos.rangeClosed(minCornerChunk(aabb), maxCornerChunk(aabb));
     }
 
     public static String toString(AABB aabb) {
         return "%s,%s,%s".formatted(aabb.getXsize(), aabb.getYsize(), aabb.getZsize());
     }
+
+    //region Deprecated
+    @Deprecated
+    public static AABB alignFloor(AABB source, AABB within) {
+        return AABBAligner.floor(source, within);
+    }
+
+    @Deprecated
+    public static AABB alignFloor(AABB source, double targetY) {
+        return AABBAligner.floor(source, targetY);
+    }
+    //endregion
 }
