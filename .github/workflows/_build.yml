@@ -25,6 +25,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build
+        run: ./gradlew :spatial:assemble
+        env:
+          VERSION: ${{ inputs.version }}
+          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
         run: ./gradlew :spatial-neoforge:assemble
         env:
           VERSION: ${{ inputs.version }}
