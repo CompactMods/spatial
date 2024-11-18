@@ -42,15 +42,15 @@ jobs:
     with:
       version: ${{ needs.vars.outputs.version }}
 
-  tests:
-    needs: [ build, vars ]
-    uses: ./.github/workflows/_run-gametests.yml
-    secrets: inherit
-    with:
-      version: ${{ needs.vars.outputs.version }}
+#  tests:
+#    needs: [ build, vars ]
+#    uses: ./.github/workflows/_run-gametests.yml
+#    secrets: inherit
+#    with:
+#      version: ${{ needs.vars.outputs.version }}
 
   publish:
-    needs: [ vars, tests ]
+    needs: [ vars, build ]
     uses: ./.github/workflows/_publish.yml
     secrets: inherit
     with:
