@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(SpatialTestMod.MOD_ID)
 public class SpatialTestMod {
 
-    public static final String MOD_ID = "spatialtest";
+    public static final String MOD_ID = "spatial_test";
     private static final Logger LOGS = LogManager.getLogger("spatial");
 
     public SpatialTestMod() {

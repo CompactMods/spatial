@@ -25,11 +25,13 @@ neoForge {
         create("spatial") {
             modSourceSets.add(spatialLib.sourceSets.main)
         }
+
+        create("spatial_test") {}
     }
 
     unitTest {
         enable()
-        testedMod = mods.named("spatial")
+        testedMod = mods.named("spatial_test")
     }
 
     runs {
@@ -37,7 +39,7 @@ neoForge {
             this.type = "gameTestServer"
             gameDirectory.set(file("runs/gametest"))
 
-            systemProperty("neoforge.enabledGameTestNamespaces", "spatial")
+            systemProperty("neoforge.enabledGameTestNamespaces", "spatial_test")
 
             this.sourceSet = sourceSets.test
         }
