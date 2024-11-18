@@ -23,7 +23,7 @@ dependencyResolutionManagement {
     versionCatalogs.create("mojang") {
         version("minecraft", "1.21.1")
         version("minecraftRange") {
-            this.require("[1.21, 1.21.2)")
+            this.require("[1.20.1, 1.22)")
             this.prefer("1.21.1")
         }
     }
