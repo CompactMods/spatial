@@ -19,14 +19,14 @@ public class SpatialTestMod {
     public SpatialTestMod(ModContainer container, IEventBus modBus) {
         LOGS.debug("Spatial test mod loaded.");
 
-        final var config = FrameworkConfiguration
-                .builder(ResourceLocation.fromNamespaceAndPath(SpatialTestMod.MOD_ID,  "tests"))
-                .enable(Feature.GAMETEST)
-                .enable(Feature.MAGIC_ANNOTATIONS)
-                .build();
-
-        var fw = config.create();
-        fw.registerCommands(Commands.literal("spatial-test"));
-        fw.init(modBus, container);
+//        final var config = FrameworkConfiguration
+//                .builder(ResourceLocation.fromNamespaceAndPath(SpatialTestMod.MOD_ID,  "tests"))
+//                .enable(Feature.GAMETEST)
+//                .enable(Feature.MAGIC_ANNOTATIONS)
+//                .build();
+//
+//        var fw = config.create();
+//        fw.registerCommands(Commands.literal("spatial-test"));
+//        fw.init(modBus, container);
     }
 }
