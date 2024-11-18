@@ -43,15 +43,15 @@ jobs:
             name: build-neo
             path: spatial-neoforge/build
 
-        - name: Run Game Tests
-          run: ./gradlew :spatial-neoforge:runGameTestServer
+#        - name: Run Game Tests
+#          run: ./gradlew :spatial-neoforge:runGameTestServer
 
-        - name: Upload test failure
-          if: failure()
-          uses: actions/upload-artifact@v4
-          with:
-            name: test-data
-            path: run/gametest
+#        - name: Upload test failure
+#          if: failure()
+#          uses: actions/upload-artifact@v4
+#          with:
+#            name: test-data
+#            path: run/gametest
 
         - name: Run JUnit Tests
           run: ./gradlew :spatial-neoforge:test

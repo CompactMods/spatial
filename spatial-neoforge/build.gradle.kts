@@ -23,10 +23,12 @@ neoForge {
 
     mods {
         create("spatial") {
-            modSourceSets.add(spatialLib.sourceSets.main)
+            // modSourceSets.add(spatialLib.sourceSets.main)
         }
 
-        create("spatial_test") {}
+        create("spatial_test") {
+            modSourceSets.add(sourceSets.test)
+        }
     }
 
     unitTest {
